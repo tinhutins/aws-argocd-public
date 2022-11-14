@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: python-test
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: python-test
+    server: https://kubernetes.default.svc 
+  project: default
+  source:
+    path: k8s-apps-deployment/python-test
+    repoURL: https://gitlab1.cratis.cc/tforko/argo-config
+    targetRevision: production-k8s-cratis
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true

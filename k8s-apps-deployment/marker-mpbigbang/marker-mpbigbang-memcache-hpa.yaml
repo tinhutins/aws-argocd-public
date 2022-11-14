@@ -1,0 +1,15 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  namespace: marker-mpbigbang
+  name: marker-mpbigbang-memcache-hpa
+  labels:
+    app: marker-mpbigbang-memcache
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: marker-mpbigbang-memcache
+  targetCPUUtilizationPercentage: 50

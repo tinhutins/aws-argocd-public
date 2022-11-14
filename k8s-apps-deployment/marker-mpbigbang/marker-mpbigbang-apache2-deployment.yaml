@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marker-mpbigbang-apache2
+  namespace: marker-mpbigbang
+spec:
+  replicas: 3
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: marker-mpbigbang-apache2
+  template:
+    metadata:
+      labels:
+        app: marker-mpbigbang-apache2
+    spec:
+      volumes:
+      - name: mpbigbang
+        persistentVolumeClaim:
+         claimName: mpbigbang
+      - name: apache-conf
+        configMap:
+          name: httpd-conf
+          items:
+          - key: httpd.conf
+            path: httpd.conf
+      - name: sparse-checkout
+        configMap:
+          name: sparse-checkout
+          items:
+          - key: sparse-checkout
+            path: sparse-checkout
+      containers:
+      - image: docker-registry.cratis.cc/cratis/marker-mpbigbang-apache
+        name: marker-mpbigbang-apache
+        ports:
+        - containerPort: 80
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 500m
+        volumeMounts:
+        - name: mpbigbang
+          mountPath: /usr/local/apache2/htdocs
+        - name: apache-conf
+          mountPath: /usr/local/apache2/conf/httpd.conf
+          subPath: httpd.conf
+        - name: sparse-checkout
+          mountPath: /usr/local/apache2/sparse-checkout
+          subPath: sparse-checkout
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+             secretKeyRef: 
+              key: MYSQL_ROOT_PASSWORD
+              name: marker-mpbigbang-mysql-secret       
+          - name: MYSQL_DATABASE
+            value: mpbigbang
+          - name: MYSQL_USER
+            value: dev_user
+          - name: MYSQL_PASSWORD
+            valueFrom: 
+             secretKeyRef: 
+              key: MYSQL_PASSWORD
+              name: marker-mpbigbang-mysql-secret
+      initContainers:
+      - image: k8s.gcr.io/git-sync/git-sync:v3.5.0
+        name: install-git-app-data
+        volumeMounts:
+        - name: mpbigbang
+          mountPath: /usr/local/apache2/htdocs
+        - name: sparse-checkout
+          mountPath: /usr/local/apache2/sparse-checkout
+          subPath: sparse-checkout
+        env:
+          - name: GIT_SYNC_REPO
+            value: https://gitlab1.cratis.cc/devops/marker-mpbigbang.git
+          - name: GIT_SYNC_BRANCH
+            value: "master"
+          - name: GIT_SYNC_ROOT
+            value: "/usr/local/apache2/htdocs/"
+          - name: GIT_SYNC_DEST
+            value: "marker"
+          - name: GIT_SYNC_DEPTH
+            value: "1"
+          - name: GIT_SYNC_SPARSE_CHECKOUT_FILE
+            value: "/usr/local/apache2/sparse-checkout"
+          - name: GIT_SYNC_ONE_TIME
+            value: "true"
+          - name: GIT_SYNC_USERNAME
+            value: "tforko"
+          - name: GIT_SYNC_PASSWORD
+            valueFrom:
+             secretKeyRef:
+              key: GIT_SYNC_PASSWORD
+              name: git-creds
+        securityContext:
+          runAsUser: 82
+          runAsGroup: 82
+      imagePullSecrets:
+      - name: regcred

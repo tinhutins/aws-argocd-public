@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: marker-php-ingress
+  namespace: marker-php
+  labels:
+    app: marker-php
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "marker-php.cratislab-prod-k8s.cratis.cc"  
+    http:
+      paths:
+      - pathType: Prefix
+        path: /      
+        backend:
+          service: 
+            name: marker-php
+            port:
+              number: 80
+
+

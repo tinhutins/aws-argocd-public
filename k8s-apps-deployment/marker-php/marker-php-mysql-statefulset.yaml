@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+spec:
+  replicas: 1
+  serviceName: mysql
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mysql
+          image: mysql:8.0
+          ports:
+            - name: tpc
+              protocol: TCP
+              containerPort: 3306
+          resources:
+            limits:
+              cpu: 1000m
+            requests:
+              cpu: 500m
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom: 
+               secretKeyRef: 
+                key: MYSQL_ROOT_PASSWORD
+                name: mysql-secret        
+            - name: MYSQL_DATABASE
+              value: mpbigbang
+            - name: MYSQL_USER
+              value: dev_user
+            - name: MYSQL_PASSWORD
+              valueFrom: 
+               secretKeyRef: 
+                key: MYSQL_PASSWORD
+                name: mysql-secret       
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        storageClassName: csi-cephfs-sc
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
