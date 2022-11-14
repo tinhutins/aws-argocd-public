@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marker-mpbigbang-phpfpm
+  namespace: marker-mpbigbang2
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: marker-mpbigbang-phpfpm
+  template:
+    metadata:
+      labels:
+        app: marker-mpbigbang-phpfpm
+    spec:
+      volumes:
+      - name: mpbigbang
+        persistentVolumeClaim:
+         claimName: mpbigbang
+      - name: www-conf
+        configMap:
+          name: www-conf
+          items:
+          - key: www.conf
+            path: www.conf
+      - name: php-ini
+        configMap:
+          name: php-ini-conf
+          items:
+          - key: php.ini
+            path: php.ini
+      - name: mpbigbang2-markerapp
+        persistentVolumeClaim:
+          claimName: mpbigbang2-markerapp  
+      containers:
+      - image: docker-registry.cratis.cc/cratis/marker-mpbigbang2-phpfpm
+        name: marker-mpbigbang-phpfpm
+        ports:
+        - containerPort: 9000
+        resources:
+          limits:
+            cpu: 1000m
+          requests:
+            cpu: 500m
+        volumeMounts:
+        - name: mpbigbang
+          mountPath: /usr/local/apache2/htdocs
+        - name: www-conf
+          mountPath: /usr/local/etc/php-fpm.d/www.conf
+          subPath: www.conf
+        - name: php-ini
+          mountPath: /usr/local/etc/php/php.ini
+          subPath: php.ini
+        - name: mpbigbang2-markerapp
+          mountPath: /usr/local/apache2/htdocs/marker/_marker_app
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom: 
+             secretKeyRef: 
+              key: MYSQL_ROOT_PASSWORD
+              name: marker-mpbigbang-mysql-secret        
+          - name: MYSQL_DATABASE
+            value: mpbigbang
+          - name: MYSQL_USER
+            value: dev_user
+          - name: MYSQL_PASSWORD
+            valueFrom: 
+             secretKeyRef: 
+              key: MYSQL_PASSWORD
+              name: marker-mpbigbang-mysql-secret
+      imagePullSecrets:
+      - name: regcred

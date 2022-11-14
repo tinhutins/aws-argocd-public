@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sparse-checkout
+  namespace: marker-mpbigbang2
+  labels:
+    config: apache2
+data:
+  sparse-checkout: |-
+     mpbigbang.si/
+#     _marker_app/
+
+

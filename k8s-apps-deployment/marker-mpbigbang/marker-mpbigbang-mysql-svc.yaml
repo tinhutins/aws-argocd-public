@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: marker-mpbigbang-mysql
+  labels:
+    app: marker-mpbigbang-mysql
+spec:
+  clusterIP: None
+  selector:
+    app: marker-mpbigbang-mysql
+  ports:
+    - name: tcp
+      protocol: TCP
+      port: 3306
+      targetPort: 3306

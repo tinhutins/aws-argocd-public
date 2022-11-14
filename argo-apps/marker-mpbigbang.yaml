@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: marker-mpbigbang
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: marker-mpbigbang
+    server: https://kubernetes.default.svc 
+  project: default
+  source:
+    path: k8s-apps-deployment/marker-mpbigbang
+    repoURL: https://gitlab1.cratis.cc/tforko/argo-config
+    targetRevision: test-k8s-cratis
+  syncPolicy:
+    automated:
+      prune: true
+    syncOptions:
+    - CreateNamespace=true

@@ -1,0 +1,28 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: marker-mpbigbang-apache2-ingress
+  namespace: marker-mpbigbang2
+  labels:
+    app: marker-mpbigbang-apache2
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "mpbigbang2.cratislab-test-k8s.cratis.cc"  
+    http:
+      paths:
+      - pathType: Prefix
+        path: /      
+        backend:
+          service: 
+            name: marker-mpbigbang-apache2
+            port:
+              number: 80
+
+
+
+
+
+
