@@ -12,8 +12,8 @@ spec:
   project: default
   source:
     path: k8s-apps-deployment/marker-php
-    repoURL: https://gitlab1.cratis.cc/tforko/argo-config
-    targetRevision: test-k8s-cratis
+    repoURL: https://gitlab1.cratis.cc/devops/argocd-external-iac
+    targetRevision: cratis-test
   syncPolicy:
     automated:
       prune: true
