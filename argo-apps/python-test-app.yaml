@@ -12,8 +12,8 @@ spec:
   project: default
   source:
     path: k8s-apps-deployment/python-test
-    repoURL: https://gitlab1.cratis.cc/tforko/argo-config
-    targetRevision: production-k8s-cratis
+    repoURL: https://gitlab1.cratis.cc/devops/argocd-external-iac
+    targetRevision: cratis-prod
   syncPolicy:
     automated:
       prune: true
