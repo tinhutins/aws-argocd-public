@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata: 
-    name: git-creds
-    namespace: marker-app
-type: Opaque
-data:
-   GIT_SYNC_USERNAME: dGZvcmtvCg==
-   GIT_SYNC_PASSWORD: U3RlZWxzZXJpZXMzJAo=
