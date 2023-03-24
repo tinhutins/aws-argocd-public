@@ -9,7 +9,5 @@ resources:
 - hpa.yaml
 
 images:
-- name: docker-registry.cratis.cc/cratis/marker-php
-  newTag: 1.0.2
 - name: docker-registry.cratis.cc/cratis/python-test-app
   newTag: 1.0.90
