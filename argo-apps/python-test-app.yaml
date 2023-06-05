@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     path: k8s-apps-deployment/python-test
-    repoURL: https://gitlab1.cratis.cc/devops/argocd-external-iac
+    repoURL: https://gitlab1.cratis.cc/devops/argocd-external-iac.git
     targetRevision: cratis-prod
   syncPolicy:
     automated:
