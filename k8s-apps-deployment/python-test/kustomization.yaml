@@ -8,6 +8,9 @@ resources:
 - registry-secret.yaml
 - hpa.yaml
 
+replicas:
+  - name: python-test
+    count: 1
 images:
 - name: docker-registry.cratis.cc/cratis/python-test-app
   newTag: 1.0.111
