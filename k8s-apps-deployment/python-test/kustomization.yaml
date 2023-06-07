@@ -14,4 +14,4 @@ resources:
     
 images:
 - name: docker-registry.cratis.cc/cratis/python-test-app
-  newTag: 1.0.114
+  newTag: 1.0.115
