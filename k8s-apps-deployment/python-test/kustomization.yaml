@@ -14,4 +14,4 @@ replicas:
     
 images:
 - name: docker-registry.cratis.cc/cratis/python-test-app
-  newTag: 1.0.113
+  newTag: 1.0.114
