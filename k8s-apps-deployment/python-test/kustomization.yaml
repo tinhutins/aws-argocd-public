@@ -9,9 +9,9 @@ resources:
 - hpa.yaml
 
 replicas:
-- count: 2
+- count: 3
   name: python-test
     
 images:
 - name: docker-registry.cratis.cc/cratis/python-test-app
-  newTag: 1.0.112
+  newTag: 1.0.113
