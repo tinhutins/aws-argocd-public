@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "python-test.cratislab-test-k8s.cratis.cc"  
+  - host: "python-test-cratislab-test-k8s.cratis.cc"  
     http:
       paths:
       - pathType: Prefix
