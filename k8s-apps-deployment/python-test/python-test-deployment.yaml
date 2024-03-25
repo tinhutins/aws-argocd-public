@@ -14,7 +14,7 @@ spec:
         app: python-test
     spec:
       containers:
-      - image: docker-registry.cratis.cc/cratis/python-test-app
+      - image: 680381031208.dkr.ecr.us-east-1.amazonaws.com/eks-test
         name: python-test-app  
         ports:
         - containerPort: 80
@@ -23,6 +23,3 @@ spec:
             cpu: 200m
           requests:
             cpu: 100m
-      imagePullSecrets:
-      - name: regcred
-

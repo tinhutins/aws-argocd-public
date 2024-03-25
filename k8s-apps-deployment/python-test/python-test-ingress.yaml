@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "python-test-cratislab-prod-k8s.cratis.cc"  
+  - host: "python-test-cratislab-prod-k8s-aws.cratis.cc"  
     http:
       paths:
       - pathType: Prefix
@@ -20,11 +20,3 @@ spec:
             name: python-test
             port:
               number: 80
----
-apiVersion: networking.k8s.io/v1
-kind: IngressClass
-metadata:
-  name: nginx
-  namespace: argocd
-spec:
-  controller: k8s.io/ingress-nginx
