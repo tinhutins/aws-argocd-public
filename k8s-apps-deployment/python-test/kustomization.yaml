@@ -6,7 +6,6 @@ resources:
 - python-test-deployment.yaml
 - python-test-ingress.yaml
 - python-test-svc.yaml
-- registry-secret.yaml
 - hpa.yaml
 
 # replicas:
