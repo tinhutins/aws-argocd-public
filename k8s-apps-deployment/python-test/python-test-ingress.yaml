@@ -20,7 +20,3 @@ spec:
             name: python-test
             port:
               number: 80
-  tls:
-     - hosts:
-         - "python-test-cratislab-prod-k8s-aws.cratis.cc"
-       secretName: test-le-crt-python-app
