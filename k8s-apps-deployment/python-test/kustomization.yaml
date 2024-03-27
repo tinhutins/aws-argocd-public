@@ -14,6 +14,4 @@ resources:
     
 images:
 - name: 680381031208.dkr.ecr.us-east-1.amazonaws.com/cratis-python-test-app
-  newTag: v1.0.170
-- name: docker-registry.cratis.cc/cratis/python-test-app
   newTag: 1.0.115
