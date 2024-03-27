@@ -15,7 +15,7 @@ spec:
         app: python-test
     spec:
       containers:
-      - image: 680381031208.dkr.ecr.us-east-1.amazonaws.com/eks-test
+      - image: 680381031208.dkr.ecr.us-east-1.amazonaws.com/cratis-python-test-app
         name: python-test-app  
         ports:
         - containerPort: 80

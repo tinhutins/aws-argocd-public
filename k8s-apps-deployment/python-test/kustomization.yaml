@@ -13,5 +13,5 @@ resources:
 #   name: python-test
     
 images:
-- name: 680381031208.dkr.ecr.us-east-1.amazonaws.com/eks-test
-  newTag: 1.0.115
+- name: 680381031208.dkr.ecr.us-east-1.amazonaws.com/cratis-python-test-app
+  newTag: v1.0.115
