@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: python-test
+  namespace: python-test
 spec:
   replicas: 2
   revisionHistoryLimit: 3
@@ -14,7 +15,7 @@ spec:
         app: python-test
     spec:
       containers:
-      - image: docker-registry.cratis.cc/cratis/python-test-app
+      - image: 680381031208.dkr.ecr.us-east-1.amazonaws.com/cratis-python-test-app
         name: python-test-app  
         ports:
         - containerPort: 80
@@ -23,5 +24,3 @@ spec:
             cpu: 200m
           requests:
             cpu: 100m
-      imagePullSecrets:
-      - name: regcred
